@@ -1,0 +1,252 @@
+{
+  "drones": {
+    "label": "Drones / Defense Tech",
+    "primary": [
+      {
+        "ticker": "UMAC",
+        "name": "Unusual Machines",
+        "sensitivity": "high"
+      },
+      {
+        "ticker": "RCAT",
+        "name": "Red Cat Holdings",
+        "sensitivity": "high"
+      },
+      {
+        "ticker": "AVAV",
+        "name": "AeroVironment",
+        "sensitivity": "medium"
+      },
+      {
+        "ticker": "KTOS",
+        "name": "Kratos Defense & Security",
+        "sensitivity": "medium"
+      }
+    ],
+    "secondary": [
+      {
+        "ticker": "LMT",
+        "name": "Lockheed Martin",
+        "sensitivity": "low"
+      },
+      {
+        "ticker": "NOC",
+        "name": "Northrop Grumman",
+        "sensitivity": "low"
+      },
+      {
+        "ticker": "RTX",
+        "name": "RTX",
+        "sensitivity": "low"
+      }
+    ],
+    "keywords": [
+      "drone",
+      "drones",
+      "uav",
+      "unmanned",
+      "counter-drone",
+      "defense supply chain",
+      "domestic drone",
+      "pentagon funding"
+    ]
+  },
+  "quantum": {
+    "label": "Quantum Computing",
+    "primary": [
+      {
+        "ticker": "IONQ",
+        "name": "IonQ",
+        "sensitivity": "high"
+      },
+      {
+        "ticker": "RGTI",
+        "name": "Rigetti Computing",
+        "sensitivity": "high"
+      },
+      {
+        "ticker": "QBTS",
+        "name": "D-Wave Quantum",
+        "sensitivity": "high"
+      },
+      {
+        "ticker": "QUBT",
+        "name": "Quantum Computing Inc.",
+        "sensitivity": "high"
+      },
+      {
+        "ticker": "ARQQ",
+        "name": "Arqit Quantum",
+        "sensitivity": "medium"
+      }
+    ],
+    "secondary": [
+      {
+        "ticker": "IBM",
+        "name": "IBM",
+        "sensitivity": "low"
+      },
+      {
+        "ticker": "GOOGL",
+        "name": "Alphabet",
+        "sensitivity": "low"
+      },
+      {
+        "ticker": "MSFT",
+        "name": "Microsoft",
+        "sensitivity": "low"
+      }
+    ],
+    "keywords": [
+      "quantum",
+      "quantum computing",
+      "qubit",
+      "nist",
+      "commerce department",
+      "quantum funding"
+    ]
+  },
+  "chips": {
+    "label": "Semiconductors / AI Infrastructure",
+    "primary": [
+      {
+        "ticker": "NVDA",
+        "name": "Nvidia",
+        "sensitivity": "high"
+      },
+      {
+        "ticker": "AMD",
+        "name": "Advanced Micro Devices",
+        "sensitivity": "medium"
+      },
+      {
+        "ticker": "AVGO",
+        "name": "Broadcom",
+        "sensitivity": "medium"
+      },
+      {
+        "ticker": "MU",
+        "name": "Micron",
+        "sensitivity": "medium"
+      },
+      {
+        "ticker": "INTC",
+        "name": "Intel",
+        "sensitivity": "medium"
+      }
+    ],
+    "secondary": [
+      {
+        "ticker": "TSM",
+        "name": "Taiwan Semiconductor",
+        "sensitivity": "medium"
+      },
+      {
+        "ticker": "ASML",
+        "name": "ASML",
+        "sensitivity": "medium"
+      },
+      {
+        "ticker": "MRVL",
+        "name": "Marvell",
+        "sensitivity": "medium"
+      }
+    ],
+    "keywords": [
+      "chip",
+      "chips",
+      "semiconductor",
+      "semiconductors",
+      "ai chips",
+      "export controls",
+      "china restrictions",
+      "advanced chips"
+    ]
+  },
+  "rare_earths": {
+    "label": "Rare Earths / Critical Minerals",
+    "primary": [
+      {
+        "ticker": "MP",
+        "name": "MP Materials",
+        "sensitivity": "high"
+      },
+      {
+        "ticker": "UUUU",
+        "name": "Energy Fuels",
+        "sensitivity": "medium"
+      },
+      {
+        "ticker": "USAR",
+        "name": "USA Rare Earth",
+        "sensitivity": "medium"
+      }
+    ],
+    "secondary": [
+      {
+        "ticker": "REMX",
+        "name": "VanEck Rare Earth/Strategic Metals ETF",
+        "sensitivity": "medium"
+      }
+    ],
+    "keywords": [
+      "rare earth",
+      "rare earths",
+      "critical minerals",
+      "china export",
+      "mineral supply chain",
+      "strategic minerals"
+    ]
+  },
+  "tariffs": {
+    "label": "Tariffs / Trade Policy",
+    "primary": [
+      {
+        "ticker": "TSLA",
+        "name": "Tesla",
+        "sensitivity": "medium"
+      },
+      {
+        "ticker": "AAPL",
+        "name": "Apple",
+        "sensitivity": "medium"
+      },
+      {
+        "ticker": "NKE",
+        "name": "Nike",
+        "sensitivity": "medium"
+      },
+      {
+        "ticker": "WMT",
+        "name": "Walmart",
+        "sensitivity": "low"
+      }
+    ],
+    "secondary": [
+      {
+        "ticker": "X",
+        "name": "United States Steel",
+        "sensitivity": "medium"
+      },
+      {
+        "ticker": "STLD",
+        "name": "Steel Dynamics",
+        "sensitivity": "medium"
+      },
+      {
+        "ticker": "NUE",
+        "name": "Nucor",
+        "sensitivity": "medium"
+      }
+    ],
+    "keywords": [
+      "tariff",
+      "tariffs",
+      "import duty",
+      "trade war",
+      "china tariff",
+      "section 301",
+      "steel tariff"
+    ]
+  }
+}

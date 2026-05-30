@@ -1,0 +1,16 @@
+{
+  "name": "wall-street-first-signal-mvp",
+  "version": "0.1.0",
+  "description": "Real-time Wall Street first signal radar for Trump, policy and high-buzz stock catalysts",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.19.2",
+    "node-fetch": "^3.3.2"
+  }
+}

@@ -1,0 +1,87 @@
+{
+  "tiers": {
+    "official": {
+      "score": 35,
+      "patterns": [
+        "whitehouse.gov",
+        "commerce.gov",
+        "defense.gov",
+        "nist.gov",
+        "sec.gov",
+        "federalregister.gov",
+        "treasury.gov"
+      ]
+    },
+    "tier1_media": {
+      "score": 28,
+      "patterns": [
+        "reuters",
+        "bloomberg",
+        "wsj",
+        "cnbc",
+        "financial times",
+        "ft.com",
+        "marketwatch",
+        "yahoo finance"
+      ]
+    },
+    "trump_direct": {
+      "score": 40,
+      "patterns": [
+        "realdonaldtrump",
+        "truth social",
+        "donald j. trump"
+      ]
+    },
+    "trusted_x": {
+      "score": 18,
+      "patterns": [
+        "unusual_whales",
+        "zerohedge",
+        "deitaone",
+        "firstsquawk",
+        "financialjuice",
+        "newsquawk"
+      ]
+    },
+    "market_chatter": {
+      "score": 8,
+      "patterns": []
+    }
+  },
+  "policy_terms": {
+    "high": [
+      "funding",
+      "equity stake",
+      "grant",
+      "loan",
+      "award",
+      "contract",
+      "strategic capital",
+      "national security",
+      "executive order",
+      "tariff",
+      "ban",
+      "export control"
+    ],
+    "medium": [
+      "support",
+      "talks",
+      "considering",
+      "preparing",
+      "policy",
+      "administration",
+      "white house",
+      "commerce department",
+      "department of defense",
+      "pentagon"
+    ],
+    "low": [
+      "mentioned",
+      "praised",
+      "criticized",
+      "meeting",
+      "visit"
+    ]
+  }
+}

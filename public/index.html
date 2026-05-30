@@ -1,0 +1,379 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Wall Street First Signal</title>
+  <style>
+    :root {
+      --bg: #0b1220;
+      --panel: #111b2e;
+      --panel2: #17233a;
+      --text: #eef4ff;
+      --muted: #95a3ba;
+      --border: #263750;
+      --accent: #d9b45f;
+      --high: #ff6b6b;
+      --med: #ffd166;
+      --low: #8ecae6;
+      --ok: #4ade80;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: radial-gradient(circle at top left, #1a2a44 0, var(--bg) 36%);
+      color: var(--text);
+    }
+    .wrap { max-width: 1280px; margin: 0 auto; padding: 22px; }
+    header {
+      display: flex;
+      gap: 16px;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+    }
+    h1 { margin: 0; font-size: 28px; letter-spacing: -0.5px; }
+    .sub { color: var(--muted); margin-top: 6px; font-size: 14px; line-height: 1.5; }
+    .actions { display: flex; gap: 10px; flex-wrap: wrap; }
+    button {
+      border: 1px solid var(--border);
+      background: var(--panel2);
+      color: var(--text);
+      padding: 10px 14px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+    button.primary { background: var(--accent); color: #15100a; border-color: #e8c878; }
+    .grid {
+      display: grid;
+      grid-template-columns: 1.3fr 0.7fr;
+      gap: 16px;
+      align-items: start;
+    }
+    .panel {
+      background: rgba(17, 27, 46, 0.92);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 16px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.22);
+    }
+    .panel h2 { margin: 0 0 12px; font-size: 18px; }
+    .status-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    .tile {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 14px;
+    }
+    .tile .num { font-size: 24px; font-weight: 800; margin-top: 6px; }
+    .tile .label { color: var(--muted); font-size: 13px; }
+    .alert {
+      border: 1px solid var(--border);
+      background: linear-gradient(180deg, #142039, #10182a);
+      border-radius: 18px;
+      padding: 16px;
+      margin-bottom: 12px;
+    }
+    .alert.high { border-color: rgba(255,107,107,0.65); }
+    .alert.medium { border-color: rgba(255,209,102,0.65); }
+    .topline {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: flex-start;
+      margin-bottom: 10px;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 12px;
+      font-weight: 800;
+      border: 1px solid var(--border);
+      background: #0c1424;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+    .badge.high { color: var(--high); border-color: rgba(255,107,107,0.55); }
+    .badge.medium { color: var(--med); border-color: rgba(255,209,102,0.55); }
+    .badge.low { color: var(--low); border-color: rgba(142,202,230,0.55); }
+    .time { color: var(--muted); font-size: 12px; direction: ltr; }
+    .alert-title { font-size: 17px; font-weight: 800; margin: 0; }
+    .text { color: #dce7f8; line-height: 1.55; margin: 10px 0 12px; }
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+    .chip {
+      background: #0b1424;
+      border: 1px solid var(--border);
+      color: #eaf1ff;
+      border-radius: 999px;
+      padding: 6px 9px;
+      font-size: 12px;
+      font-weight: 700;
+      direction: ltr;
+    }
+    .meta {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-top: 12px;
+    }
+    .meta div {
+      background: rgba(255,255,255,0.035);
+      border: 1px solid rgba(255,255,255,0.055);
+      border-radius: 12px;
+      padding: 10px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .meta b { display: block; color: var(--text); margin-top: 4px; font-size: 13px; }
+    .empty {
+      color: var(--muted);
+      padding: 30px;
+      text-align: center;
+      border: 1px dashed var(--border);
+      border-radius: 16px;
+    }
+    .watchlist table { width: 100%; border-collapse: collapse; }
+    .watchlist td, .watchlist th {
+      border-bottom: 1px solid var(--border);
+      padding: 10px 6px;
+      font-size: 13px;
+      text-align: right;
+    }
+    .watchlist th { color: var(--muted); font-weight: 700; }
+    .ltr { direction: ltr; text-align: left; }
+    .small { color: var(--muted); font-size: 12px; line-height: 1.45; }
+    .pulse {
+      width: 10px;
+      height: 10px;
+      background: var(--ok);
+      border-radius: 50%;
+      display: inline-block;
+      margin-left: 7px;
+      box-shadow: 0 0 0 0 rgba(74,222,128,0.75);
+      animation: pulse 1.8s infinite;
+    }
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(74,222,128,0.75); }
+      70% { box-shadow: 0 0 0 8px rgba(74,222,128,0); }
+      100% { box-shadow: 0 0 0 0 rgba(74,222,128,0); }
+    }
+    @media (max-width: 860px) {
+      header { align-items: flex-start; flex-direction: column; }
+      .grid { grid-template-columns: 1fr; }
+      .status-row { grid-template-columns: repeat(2, 1fr); }
+      .meta { grid-template-columns: 1fr; }
+      h1 { font-size: 24px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div>
+        <h1><span class="pulse"></span> Wall Street First Signal</h1>
+        <div class="sub">
+          מערכת התראה ראשונית למניות וול סטריט בלבד, בדגש על טראמפ, מדיניות ממשל, מימון, מכסים, ביטחון, קוונטים, רחפנים ושבבים.
+        </div>
+      </div>
+      <div class="actions">
+        <button class="primary" id="simulate">הזרק ידיעה לדוגמה</button>
+        <button id="clear">נקה מסך</button>
+      </div>
+    </header>
+
+    <div class="status-row">
+      <div class="tile">
+        <div class="label">התראות במסך</div>
+        <div class="num" id="count">0</div>
+      </div>
+      <div class="tile">
+        <div class="label">סיגנלים חזקים</div>
+        <div class="num" id="highCount">0</div>
+      </div>
+      <div class="tile">
+        <div class="label">קישור טראמפ/ממשל</div>
+        <div class="num" id="trumpCount">0</div>
+      </div>
+      <div class="tile">
+        <div class="label">סטטוס חיבור</div>
+        <div class="num" id="conn">Live</div>
+      </div>
+    </div>
+
+    <main class="grid">
+      <section class="panel">
+        <h2>Live Alerts</h2>
+        <div id="alerts" class="empty">אין התראות עדיין. לחץ על “הזרק ידיעה לדוגמה”.</div>
+      </section>
+
+      <aside class="panel watchlist">
+        <h2>מניות שחוזרות ברדאר</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>טיקר</th>
+              <th>אזכורים</th>
+              <th>תפקיד</th>
+            </tr>
+          </thead>
+          <tbody id="tickerTable"></tbody>
+        </table>
+        <p class="small">
+          הערה: זהו כלי סינון והתראה, לא ייעוץ השקעות ולא המלצה. הסיווג “First Signal” נועד להתרעה מהירה בלבד, לפני אימות מלא.
+        </p>
+      </aside>
+    </main>
+  </div>
+
+  <script>
+    const alertsEl = document.getElementById("alerts");
+    const countEl = document.getElementById("count");
+    const highCountEl = document.getElementById("highCount");
+    const trumpCountEl = document.getElementById("trumpCount");
+    const tickerTableEl = document.getElementById("tickerTable");
+    const connEl = document.getElementById("conn");
+
+    let events = [];
+    const tickerCounts = new Map();
+
+    function levelClass(level) {
+      if (level === "HIGH") return "high";
+      if (level === "MEDIUM") return "medium";
+      return "low";
+    }
+
+    function formatTime(iso) {
+      const d = new Date(iso);
+      return d.toLocaleTimeString("he-IL", { hour12: false });
+    }
+
+    function escapeHtml(value) {
+      return String(value || "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function renderAlert(e) {
+      const cls = levelClass(e.level);
+      const tickers = (e.relatedTickers || []).map(t => `<span class="chip">$${escapeHtml(t.ticker)} · ${escapeHtml(t.role)}</span>`).join("");
+      const themes = (e.themes || []).map(t => t.label).join(", ") || "N/A";
+      const reasons = (e.reasons || []).join(" | ") || "N/A";
+
+      return `
+        <article class="alert ${cls}">
+          <div class="topline">
+            <div>
+              <p class="alert-title">🚨 ${escapeHtml(e.status || "FIRST_SIGNAL")} · ${escapeHtml(e.level)} · ${e.score}/100</p>
+              <div class="time">${formatTime(e.createdAt)} · ${escapeHtml(e.source)} ${e.author ? "· @" + escapeHtml(e.author) : ""}</div>
+            </div>
+            <span class="badge ${cls}">${escapeHtml(e.verification || "Checking")}</span>
+          </div>
+
+          <div class="text">${escapeHtml(e.text)}</div>
+
+          <div class="chips">${tickers || '<span class="chip">No ticker resolved</span>'}</div>
+
+          <div class="meta">
+            <div>נרטיב<b>${escapeHtml(themes)}</b></div>
+            <div>קשר טראמפ/ממשל<b>${e.trumpLinked ? "כן" : "לא"}</b></div>
+            <div>סיבת ההתראה<b>${escapeHtml(reasons)}</b></div>
+          </div>
+        </article>
+      `;
+    }
+
+    function updateTickerTable() {
+      tickerTableEl.innerHTML = [...tickerCounts.entries()]
+        .sort((a, b) => b[1].count - a[1].count)
+        .slice(0, 20)
+        .map(([ticker, meta]) => `
+          <tr>
+            <td class="ltr"><b>$${escapeHtml(ticker)}</b></td>
+            <td>${meta.count}</td>
+            <td>${escapeHtml(meta.role)}</td>
+          </tr>
+        `).join("");
+    }
+
+    function render() {
+      countEl.textContent = events.length;
+      highCountEl.textContent = events.filter(e => e.level === "HIGH").length;
+      trumpCountEl.textContent = events.filter(e => e.trumpLinked).length;
+
+      if (!events.length) {
+        alertsEl.className = "empty";
+        alertsEl.innerHTML = "אין התראות עדיין. לחץ על “הזרק ידיעה לדוגמה”.";
+      } else {
+        alertsEl.className = "";
+        alertsEl.innerHTML = events.map(renderAlert).join("");
+      }
+      updateTickerTable();
+    }
+
+    function ingestEvent(e) {
+      if (!e || e.type === "CONNECTED") return;
+
+      events.unshift(e);
+      events = events.slice(0, 80);
+
+      for (const t of e.relatedTickers || []) {
+        const existing = tickerCounts.get(t.ticker) || { count: 0, role: t.role };
+        existing.count += 1;
+        existing.role = t.role || existing.role;
+        tickerCounts.set(t.ticker, existing);
+      }
+
+      render();
+    }
+
+    document.getElementById("simulate").addEventListener("click", async () => {
+      await fetch("/api/simulate", { method: "POST" });
+    });
+
+    document.getElementById("clear").addEventListener("click", () => {
+      events = [];
+      tickerCounts.clear();
+      render();
+    });
+
+    const es = new EventSource("/api/stream");
+    es.onopen = () => { connEl.textContent = "Live"; };
+    es.onerror = () => { connEl.textContent = "Retry"; };
+    es.onmessage = (msg) => {
+      try {
+        ingestEvent(JSON.parse(msg.data));
+      } catch (e) {
+        console.error(e);
+      }
+    };
+
+    fetch("/api/events")
+      .then(r => r.json())
+      .then(list => {
+        events = list || [];
+        for (const e of events) {
+          for (const t of e.relatedTickers || []) {
+            const existing = tickerCounts.get(t.ticker) || { count: 0, role: t.role };
+            existing.count += 1;
+            existing.role = t.role || existing.role;
+            tickerCounts.set(t.ticker, existing);
+          }
+        }
+        render();
+      });
+  </script>
+</body>
+</html>
