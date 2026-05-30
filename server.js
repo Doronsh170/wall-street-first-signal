@@ -336,25 +336,55 @@ function extractTweetsFromTwitterApiResponse(json) {
 }
 
 async function fetchLatestTweetsForUser(username) {
-  const url = new URL("https://api.twitterapi.io/twitter/user/latest_tweets");
-  url.searchParams.set("userName", username);
-  url.searchParams.set("pageSize", "5");
-  url.searchParams.set("includeReplies", "false");
+  // TwitterAPI.io official docs currently show this endpoint:
+  // GET https://api.twitterapi.io/twitter/user/last_tweets
+  // Required header: X-API-Key
+  // Query: userName, includeReplies, cursor
+  const endpoints = [
+    "https://api.twitterapi.io/twitter/user/last_tweets",
+    // Fallback kept for accounts/docs that still expose the older alias.
+    "https://api.twitterapi.io/twitter/user/latest_tweets"
+  ];
 
-  const response = await fetch(url.toString(), {
-    method: "GET",
-    headers: {
-      "X-API-Key": TWITTER_API_KEY,
-      "Accept": "application/json"
+  let lastError = null;
+
+  for (const endpoint of endpoints) {
+    const url = new URL(endpoint);
+    url.searchParams.set("userName", username);
+    url.searchParams.set("includeReplies", "false");
+    url.searchParams.set("cursor", "");
+
+    const response = await fetch(url.toString(), {
+      method: "GET",
+      headers: {
+        "X-API-Key": TWITTER_API_KEY,
+        "Accept": "application/json"
+      }
+    });
+
+    const raw = await response.text();
+
+    if (!response.ok) {
+      lastError = `TwitterAPI.io error ${response.status} from ${endpoint}: ${raw.slice(0, 300)}`;
+      continue;
     }
-  });
 
-  if (!response.ok) {
-    const body = await response.text().catch(() => "");
-    throw new Error(`TwitterAPI.io error ${response.status}: ${body.slice(0, 300)}`);
+    try {
+      const json = JSON.parse(raw);
+      const count = extractTweetsFromTwitterApiResponse(json).length;
+      console.log(`TwitterAPI.io endpoint ${endpoint} returned ${count} tweets for @${username}`);
+
+      if (count === 0) {
+        console.log(`TwitterAPI.io raw preview for @${username}: ${raw.slice(0, 500)}`);
+      }
+
+      return json;
+    } catch (err) {
+      lastError = `TwitterAPI.io JSON parse failed from ${endpoint}: ${raw.slice(0, 300)}`;
+    }
   }
 
-  return response.json();
+  throw new Error(lastError || "TwitterAPI.io request failed");
 }
 
 async function pollTwitterApiOnce({ seedOnly = false } = {}) {
