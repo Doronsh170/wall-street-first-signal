@@ -336,10 +336,8 @@ function extractTweetsFromTwitterApiResponse(json) {
 }
 
 async function fetchLatestTweetsForUser(username) {
-  const url = new URL("https://api.twitterapi.io/twitter/user/latest_tweets");
+  const url = new URL("https://api.twitterapi.io/twitter/user/last_tweets");
   url.searchParams.set("userName", username);
-  url.searchParams.set("pageSize", "5");
-  url.searchParams.set("includeReplies", "false");
 
   const response = await fetch(url.toString(), {
     method: "GET",
